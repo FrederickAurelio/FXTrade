@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #fafafa;
+  color: #27272a;
+}
+
+
+@layer components {
+  .container {
+    @apply rounded-3xl bg-zinc-50 p-5 drop-shadow-2xl
+  }
+  .feature-container {
+    @apply cursor-pointer rounded-3xl bg-zinc-50 p-5 drop-shadow-2xl duration-200;
+  }
+
+  .feature-container:hover {
+    @apply scale-105;
+  }
+
+  .testimonial {
+    @apply mb-6 md:mb-4 w-fit rounded-full bg-zinc-100 px-6 py-3 text-xs drop-shadow-md md:px-10 md:py-5 md:text-base
+  }
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f4f4f5;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #a1a1aa;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1aa;
+}
