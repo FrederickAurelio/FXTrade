@@ -1,26 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChartPage from "./ChartPage";
 import TablePage from "./TablePage";
 import { useScreenSize } from "../context/ScreenContext";
 import { HiMiniChartBar, HiMiniTableCells } from "react-icons/hi2";
+import AV from "leancloud-storage/";
+import { useNavigate } from "react-router-dom";
 
 function AppPage() {
   const [activeTab, setActiveTab] = useState("chart");
   const { screenSize } = useScreenSize();
+
+  const user = AV.User.current();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) navigate("/forex/login/");
+  }, [navigate, user]);
+
+
   return (
     <>
       <main className="grid h-[93dvh] w-full bg-zinc-100 lg:h-dvh lg:grid-cols-2 lg:divide-x-2 lg:divide-zinc-200">
         {screenSize > 1020 && (
           <>
-            <ChartPage />
-            <TablePage setActiveTab={setActiveTab}/>
+            <ChartPage/>
+            <TablePage setActiveTab={setActiveTab} />
           </>
         )}
         {screenSize <= 1020 ? (
           activeTab === "chart" ? (
-            <ChartPage />
+            <ChartPage/>
           ) : (
-            <TablePage setActiveTab={setActiveTab}/>
+            <TablePage setActiveTab={setActiveTab} />
           )
         ) : (
           ""

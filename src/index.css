@@ -12,6 +12,19 @@ body {
 }
 
 
+@keyframes rotate {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+
 @layer components {
   .container {
     @apply rounded-3xl bg-zinc-50 p-5 drop-shadow-2xl
@@ -47,4 +60,14 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #a1a1aa;
+}
+
+.spinner {
+  width: 8rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(farthest-side, #6ee7b7 94%, #0000) top/12px 12px no-repeat,
+    conic-gradient(#0000 30%, #6ee7b7);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 12px), #000 0);
+  animation: rotate 1s infinite linear;
 }

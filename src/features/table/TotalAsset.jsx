@@ -1,13 +1,12 @@
-import { fakeTableData } from "../../utils/data";
 import { formatCurrency, formatNumber } from "../../utils/helpers";
 
-function TotalAsset() {
-  const buyValue = fakeTableData
-    .map((data) => data.quantity / data.buyPrice)
+function TotalAsset({ latestCur, transactions }) {
+  const buyValue = transactions
+    .map((data) => data.quantity / data.avgBuyPrice)
     .reduce((acc, v) => (acc += v), 0);
 
-  const curValue = fakeTableData
-    .map((data) => data.quantity / data.currentPrice)
+  const curValue = transactions
+    .map((data) => data.quantity / latestCur.rates[data.asset])
     .reduce((acc, v) => (acc += v), 0);
 
   return (

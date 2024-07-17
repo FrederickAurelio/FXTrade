@@ -1,10 +1,12 @@
 import { useSearchParams } from "react-router-dom";
-import { fakeTableData } from "../../utils/data";
+import { fakeLatestCur } from "../../utils/data";
 import { formatCurrency, formatNumber } from "../../utils/helpers";
 import TotalAsset from "./TotalAsset";
 
-function Table({ setActiveTab }) {
+function Table({ setActiveTab, transactions }) {
   const [searchParam, setSearchParam] = useSearchParams();
+  // later
+  const latestCur = fakeLatestCur;
 
   return (
     <div className="flex w-full flex-col divide-y divide-zinc-200 overflow-x-auto xl:items-center xl:overflow-x-hidden">
@@ -16,7 +18,7 @@ function Table({ setActiveTab }) {
         <p>Current Value</p>
         <p className="text-end">Change(%)</p>
       </div>
-      {fakeTableData.map((cell, i) => (
+      {transactions.map((cell, i) => (
         <div
           onClick={() => {
             searchParam.set("cur", cell.asset);
@@ -24,18 +26,25 @@ function Table({ setActiveTab }) {
             setActiveTab("chart");
           }}
           key={i}
-          className="text-start grid w-[42rem] cursor-pointer grid-cols-6 hover:bg-zinc-100"
+          className="grid w-[42rem] cursor-pointer grid-cols-6 text-start hover:bg-zinc-100"
         >
           <p className="py-1">{cell.asset}</p>
           <p className="py-1">{formatNumber(cell.quantity)}</p>
-          <p className="py-1">{formatNumber(cell.buyPrice)}</p>
-          <p className="py-1">{formatNumber(cell.currentPrice)}</p>
+          <p className="py-1">{formatNumber(cell.avgBuyPrice)}</p>
           <p className="py-1">
-            {formatCurrency(cell.quantity / cell.currentPrice, "CNY")}
+            {formatNumber(latestCur.rates[cell.asset].toFixed(5))}
+          </p>
+          <p className="py-1">
+            {formatCurrency(
+              cell.quantity / latestCur.rates[cell.asset],
+              "CNY",
+            )}
           </p>
           <p
             className={`${
-              ((cell.buyPrice - cell.currentPrice) / cell.currentPrice) * 100 >=
+              ((cell.avgBuyPrice - latestCur.rates[cell.asset]) /
+                latestCur.rates[cell.asset]) *
+                100 >=
               0
                 ? "text-emerald-700"
                 : "text-rose-700"
@@ -43,7 +52,8 @@ function Table({ setActiveTab }) {
           >
             {formatNumber(
               (
-                ((cell.buyPrice - cell.currentPrice) / cell.currentPrice) *
+                ((cell.avgBuyPrice - latestCur.rates[cell.asset]) /
+                  latestCur.rates[cell.asset]) *
                 100
               ).toFixed(2),
             )}
@@ -51,7 +61,7 @@ function Table({ setActiveTab }) {
           </p>
         </div>
       ))}
-      <TotalAsset />
+      <TotalAsset latestCur={latestCur} transactions={transactions}/>
     </div>
   );
 }
