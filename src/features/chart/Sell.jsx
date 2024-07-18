@@ -30,11 +30,11 @@ function Sell({ cur, latestCur, datas, onCloseModal }) {
     <div className="flex w-[22rem] flex-col divide-y-2 divide-rose-700 px-3 py-2 text-center">
       <h1 className="text-xl font-semibold">Sell {transaction.asset}</h1>
       <div className="grid grid-cols-2 px-2 text-start text-lg">
-        <p>Current Quantity:</p>
-        <p>{formatNumber(transaction.quantity)}</p>
+        <p>My Quantity:</p>
+        <p>{formatNumber(transaction.quantity)}{transaction.asset}</p>
         <p>Current Price: </p>
         <p>{formatNumber(currentPrice)}</p>
-        <p>Current Balance:</p>
+        <p>Balance:</p>
         <p>{formatCurrency(balance, "CNY")}</p>
         <p>Sell Quantity:</p>
         <div className="flex">

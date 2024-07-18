@@ -43,10 +43,13 @@ function Buy({ cur, latestCur, datas, isOwn, onCloseModal }) {
       <h1 className="text-xl font-semibold">Buy {transaction.asset}</h1>
       <div className="grid grid-cols-2 px-2 text-start text-lg">
         <p>Current Quantity:</p>
-        <p>{formatNumber(transaction.quantity)}</p>
+        <p>
+          {formatNumber(transaction.quantity)}
+          {transaction.asset}
+        </p>
         <p>Current Price: </p>
         <p>{formatNumber(currentPrice)}</p>
-        <p>Current Balance:</p>
+        <p>Balance:</p>
         <p>{formatCurrency(balance, "CNY")}</p>
         <p>Buy Quantity:</p>
         <div className="flex">
