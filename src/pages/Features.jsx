@@ -14,7 +14,7 @@ function Features({ screenSize }) {
           </h1>
         )}
         <div className="feature-container row-start-1 row-end-5 md:col-start-1 md:row-start-2 md:row-end-8">
-          <img className="w-[80%] px-3 pb-2" src="/features1.png" />
+          <img className="w-[80%] px-3 pb-2" src="/forex/features1.png" />
           <div className="px-3 text-justify">
             <h2 className="mb-1 text-xl font-semibold">
               Trade Anywhere, Anytime
@@ -27,7 +27,7 @@ function Features({ screenSize }) {
           </div>
         </div>
         <div className="feature-container row-start-5 row-end-8 md:col-start-2 md:row-start-1 md:row-end-6">
-          <img className="w-1/2 px-2 mb-2" src="/features2.png" />
+          <img className="w-1/2 px-2 mb-2" src="/forex/features2.png" />
           <div className="px-3 text-justify">
             <h2 className="mb-2 text-xl font-semibold">Navigate with Ease</h2>
             <p className="text-sm md:text-base">
@@ -39,7 +39,7 @@ function Features({ screenSize }) {
           </div>
         </div>
         <div className="feature-container row-start-8 row-end-10 md:col-start-2 md:row-start-6 md:row-end-9">
-          <img className="w-[60%] px-2 pb-2" src="/features5.png" />
+          <img className="w-[60%] px-2 pb-2" src="/forex/features5.png" />
           <div className="px-2 text-justify">
             <h2 className="mb-1 text-xl font-semibold">
               Learn to Trade with No Risk
@@ -54,7 +54,7 @@ function Features({ screenSize }) {
         <div className="feature-container row-start-10 row-end-13 md:col-start-3 md:row-start-3 md:row-end-7">
           <img
             className="w-[50%] px-3 pb-4 md:w-[40%] md:pb-2"
-            src="/features.png"
+            src="/forex/features.png"
           />
           <div className="px-3 text-justify">
             <h2 className="mb-1 text-xl font-semibold">

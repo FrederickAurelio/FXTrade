@@ -13,7 +13,7 @@ function Footer() {
         className="absolute bottom-1 left-2 text-sm underline md:text-base"
       >
         <div className="flex items-center gap-1">
-          <img className="h-6 w-6 rounded-full" src="/profile.jpeg" />
+          <img className="h-6 w-6 rounded-full" src="/forex/profile.jpeg" />
           <p>Developed by: Frederick Aurelio Halim</p>
         </div>
       </a>

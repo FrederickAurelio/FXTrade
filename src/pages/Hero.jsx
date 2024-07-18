@@ -35,7 +35,7 @@ function Hero({ screenSize }) {
       </div>
       <img
         id="img"
-        src={`${screenSize > 760 ? "/back.jpg" : "/Phoneback.jpg"}`}
+        src={`${screenSize > 760 ? "/forex/back.jpg" : "/forex/Phoneback.jpg"}`}
         className="absolute h-full w-full scale-150 opacity-80 md:-translate-y-56 md:scale-[2] md:object-cover"
       />
     </section>

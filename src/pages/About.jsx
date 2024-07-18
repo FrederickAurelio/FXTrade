@@ -38,7 +38,7 @@ function About() {
         <div className="grid h-full w-full grid-rows-4 px-2 xl:px-28">
           <img
             className="row-span-1 h-full w-full object-cover md:row-span-2"
-            src="/about2.png"
+            src="/forex/about2.png"
             ref={img}
           />
           <div className="row-span-3 mt-4 flex flex-col gap-5 text-justify md:row-span-2 md:flex-row lg:px-6">
