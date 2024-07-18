@@ -20,7 +20,7 @@ function Chart() {
 
   const { currency, isPending } = useCurrency();
   const { isPending: isPending2, data: transactionData } = useData(user.id);
-  
+
   //later
   const latestCur = fakeLatestCur;
 
@@ -45,7 +45,13 @@ function Chart() {
     <div>
       <div className="flex flex-col justify-between md:flex-row">
         <p className="px-1 py-1 text-xl font-bold md:text-2xl">
-          1 CNY = {latestCur.rates[cur]} {cur}
+          1 CNY = {latestCur.rates[cur]} {cur}{" "}
+          <span
+            className={`${rates.at(1) <= rates.at(-1) ? "text-rose-700" : "text-emerald-700"}`}
+          >
+            ({(((rates.at(1) - rates.at(-1)) / rates.at(-1)) * 100).toFixed(2)}
+            %)
+          </span>
         </p>
         <TimeSeries searchParam={searchParam} setSearchParam={setSearchParam} />
       </div>
@@ -64,7 +70,7 @@ function Chart() {
           {
             data: [...rates, latestCur.rates[cur]],
             label: cur,
-            color: `${rates.at(1) <= rates.at(-1) ? "#047857" : "#be123c"}`,
+            color: `${rates.at(1) <= rates.at(-1) ? "#be123c" : "#047857"}`,
             valueFormatter: (value) => value.toFixed(5),
           },
         ]}

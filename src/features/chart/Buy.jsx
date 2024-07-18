@@ -7,8 +7,8 @@ function Buy({ cur, latestCur, datas, isOwn, onCloseModal }) {
   const transaction = isOwn
     ? datas?.transactions.find((t) => t.asset === cur)
     : { asset: cur, quantity: 0 };
-  const currentPrice = latestCur.rates[cur];
   const [buyQuantity, setBuyQuantity] = useState(0);
+  const currentPrice = latestCur.rates[cur];
   const totalPrice = buyQuantity / currentPrice;
   const balance = datas?.balance;
 

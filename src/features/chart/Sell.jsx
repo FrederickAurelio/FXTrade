@@ -1,10 +1,30 @@
 import { useState } from "react";
 import { formatCurrency, formatNumber } from "../../utils/helpers";
+import useUpdateTransaction from "./useUpdateTransaction";
+import useDeleteTransaction from "./useDeleteTransaction";
 
-function Sell({ cur, latestCur, datas }) {
+function Sell({ cur, latestCur, datas, onCloseModal }) {
   const transaction = datas?.transactions.find((t) => t.asset === cur);
   const [sellQuantity, setSellQuantity] = useState(0);
-  const sellPrice = sellQuantity / latestCur.rates[cur];
+  const currentPrice = latestCur.rates[cur];
+  const sellPrice = Number(sellQuantity) / currentPrice;
+  const balance = datas?.balance;
+
+  const { isUpdating, update } = useUpdateTransaction(onCloseModal);
+  const { isDeleting, deletes } = useDeleteTransaction(onCloseModal);
+
+  function handleSell() {
+    if (transaction.quantity > Number(sellQuantity)) {
+      update({
+        asset: transaction.asset,
+        avgBuyPrice: transaction.avgBuyPrice,
+        quantity: transaction.quantity - Number(sellQuantity),
+        balance: Number(balance) + Number(sellPrice),
+      });
+    } else if (transaction.quantity === Number(sellQuantity)) {
+      deletes({ balance: Number(balance) + Number(sellPrice), asset: cur });
+    }
+  }
 
   return (
     <div className="flex w-[22rem] flex-col divide-y-2 divide-rose-700 px-3 py-2 text-center">
@@ -13,12 +33,13 @@ function Sell({ cur, latestCur, datas }) {
         <p>Current Quantity:</p>
         <p>{formatNumber(transaction.quantity)}</p>
         <p>Current Price: </p>
-        <p>{formatNumber(latestCur.rates[cur])}</p>
-        <p>Balance:</p>
-        <p>{formatCurrency(datas.balance, "CNY")}</p>
+        <p>{formatNumber(currentPrice)}</p>
+        <p>Current Balance:</p>
+        <p>{formatCurrency(balance, "CNY")}</p>
         <p>Sell Quantity:</p>
         <div className="flex">
           <input
+            disabled={isUpdating || isDeleting}
             value={sellQuantity}
             onChange={(e) => {
               const value = e.target.value;
@@ -36,7 +57,11 @@ function Sell({ cur, latestCur, datas }) {
       <div className="grid grid-cols-2 px-2 text-start text-lg">
         <p>Sell Price:</p>
         <p>{formatCurrency(sellPrice, "CNY")}</p>
-        <button className="col-span-2 mt-6 cursor-pointer rounded-lg bg-rose-700 px-6 py-1 font-semibold text-white">
+        <button
+          disabled={isUpdating || isDeleting}
+          onClick={handleSell}
+          className={`${isUpdating || isDeleting ? "cursor-not-allowed bg-zinc-300" : "cursor-pointer bg-rose-700"} col-span-2 mt-6 rounded-lg px-6 py-1 font-semibold text-white`}
+        >
           SELL
         </button>
       </div>
