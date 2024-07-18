@@ -44,8 +44,7 @@ function Buy({ cur, latestCur, datas, isOwn, onCloseModal }) {
       <div className="grid grid-cols-2 px-2 text-start text-lg">
         <p>Current Quantity:</p>
         <p>
-          {formatNumber(transaction.quantity)}
-          {transaction.asset}
+          {formatNumber(transaction.quantity)} {transaction.asset}
         </p>
         <p>Current Price: </p>
         <p>{formatNumber(currentPrice)}</p>
