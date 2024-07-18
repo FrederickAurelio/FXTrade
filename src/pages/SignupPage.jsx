@@ -61,7 +61,7 @@ function SignupPage() {
       <div className="container w-80 text-center">
         <p className="text-sm">
           Have an account?{" "}
-          <Link to="/forex/login/" className="font-semibold text-emerald-700">
+          <Link to="/forex/login/" className="text-xl font-semibold text-emerald-700">
             Log in
           </Link>
         </p>

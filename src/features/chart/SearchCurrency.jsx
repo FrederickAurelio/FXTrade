@@ -45,6 +45,7 @@ function SearchCurrency() {
         className="flex w-full"
       >
         <input
+          placeholder="CNY to..."
           ref={input}
           onChange={handleInput}
           className="flex-grow rounded-lg border-2 border-zinc-300 px-5 py-2 focus:outline-none focus:ring-1 focus:ring-emerald-700"

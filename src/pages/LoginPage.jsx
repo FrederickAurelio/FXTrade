@@ -52,7 +52,7 @@ function LoginPage() {
           <button
             disabled={isPending}
             type="submit"
-            className={`mb-4 mt-2 w-full rounded-xl bg-emerald-700 py-[6px] font-semibold text-zinc-50 ${isPending? "cursor-not-allowed" : ""}`}
+            className={`mb-4 mt-2 w-full rounded-xl bg-emerald-700 py-[6px] font-semibold text-zinc-50 ${isPending ? "cursor-not-allowed" : ""}`}
           >
             Log in
           </button>
@@ -68,7 +68,10 @@ function LoginPage() {
       <div className="container w-80 text-center">
         <p className="text-sm">
           Don{"'"}t have an account?{" "}
-          <Link to="/forex/signup/" className="font-semibold text-emerald-700">
+          <Link
+            to="/forex/signup/"
+            className="text-lg font-semibold text-emerald-700"
+          >
             Sign up
           </Link>
         </p>
