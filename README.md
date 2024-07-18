@@ -6,7 +6,8 @@
 
 ## 👉Key Features
 <ul>
-  <li><strong>Animated Landing Page:</strong> Landing page are animated using GSAP</li>
+  <li><strong>Animated Landing Page:</strong> Landing page are animated using GSAP.</li>
+  <li><strong>Responsive Design:</strong> The website works on any devices</li>
   <li><strong>User Authentication:</strong> Secure sign-up, login, and password reset functionality.</li>
   <li><strong>Real-time Forex Trading:</strong> Search and trade forex with up-to-date prices.</li>
   <li><strong>Customizable Timeseries:</strong> Adjust timeseries length for detailed currency fluctuation</li>
