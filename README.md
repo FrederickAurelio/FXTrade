@@ -2,7 +2,7 @@
   <h1>FXTrade</h1>
   <p>Forex Trade Demo App, where users can learn to trade foreign exchange currency in real-time. This web application allows users to sign up, log in, and receive ¥100,000  fake money to practice trading. Also works on mobile and desktop or any devices.</p>
   <span></span> <a href="http://120.26.45.50/forex/" target="_blank" rel="noreferrer"><p>FXTrade (China)</p></a>
-  <span></span> <a href="https://fx-trade-gamma.vercel.app/forex/" target="_blank" rel="noreferrer"><p>FXTrade (Intl)</p></a>
+  <span></span> <a href="https://fx-trade-gamma.vercel.app/" target="_blank" rel="noreferrer"><p>FXTrade (Intl)</p></a>
 </div>
 
 ## 👉Key Features
