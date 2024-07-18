@@ -1,8 +1,22 @@
 import InputForm from "../components/InputForm";
 import { Link } from "react-router-dom";
 import { HiOutlineLockClosed } from "react-icons/hi2";
+import { useForm } from "react-hook-form";
+import { useUserForgot } from "../features/auth/useUserForgot";
 
 function ForgotPass() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const { isPending, forgot } = useUserForgot();
+
+  function onSubmit(data) {
+    forgot(data.email);
+  }
+
   return (
     <section className="relative flex h-dvh w-full flex-col items-center justify-center gap-4 bg-zinc-100">
       <div className="container flex w-fit flex-col items-center p-8">
@@ -12,11 +26,22 @@ function ForgotPass() {
           Enter your email, and we{"'"}ll send you a link to get back into your
           account.
         </p>
-        <form className="flex flex-col items-center gap-1">
-          <InputForm type="email" placeholder="Email" />
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col items-center gap-1"
+        >
+          <InputForm
+            disabled={isPending}
+            register={register}
+            id="email"
+            type="email"
+            placeholder="Email"
+            errors={errors}
+          />
           <button
+            disabled={isPending}
             type="submit"
-            className="mb-4 mt-2 w-full rounded-xl bg-emerald-700 py-[6px] font-semibold text-zinc-50"
+            className={`mb-4 mt-2 w-full rounded-xl bg-emerald-700 py-[6px] font-semibold text-zinc-50 ${isPending ? "cursor-not-allowed" : ""}`}
           >
             Send login link
           </button>

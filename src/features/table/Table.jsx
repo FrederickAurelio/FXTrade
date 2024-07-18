@@ -3,7 +3,7 @@ import { fakeLatestCur } from "../../utils/data";
 import { formatCurrency, formatNumber } from "../../utils/helpers";
 import TotalAsset from "./TotalAsset";
 
-function Table({ setActiveTab, transactions }) {
+function Table({ setActiveTab, transactions = [] }) {
   const [searchParam, setSearchParam] = useSearchParams();
   // later
   const latestCur = fakeLatestCur;
@@ -30,15 +30,12 @@ function Table({ setActiveTab, transactions }) {
         >
           <p className="py-1">{cell.asset}</p>
           <p className="py-1">{formatNumber(cell.quantity)}</p>
-          <p className="py-1">{formatNumber(cell.avgBuyPrice)}</p>
+          <p className="py-1">{formatNumber(cell.avgBuyPrice.toFixed(5))}</p>
           <p className="py-1">
             {formatNumber(latestCur.rates[cell.asset].toFixed(5))}
           </p>
           <p className="py-1">
-            {formatCurrency(
-              cell.quantity / latestCur.rates[cell.asset],
-              "CNY",
-            )}
+            {formatCurrency(cell.quantity / latestCur.rates[cell.asset], "CNY")}
           </p>
           <p
             className={`${
@@ -61,7 +58,13 @@ function Table({ setActiveTab, transactions }) {
           </p>
         </div>
       ))}
-      <TotalAsset latestCur={latestCur} transactions={transactions}/>
+      {transactions.length !== 0 ? (
+        <TotalAsset latestCur={latestCur} transactions={transactions} />
+      ) : (
+        <p className="font-semibold text-emerald-700">
+          Buy your first currency and the data will be shown here
+        </p>
+      )}
     </div>
   );
 }

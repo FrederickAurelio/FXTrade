@@ -1,13 +1,42 @@
 import { useState } from "react";
 import { formatCurrency, formatNumber } from "../../utils/helpers";
+import useCreateTransaction from "./useCreateTransaction";
+import useUpdateTransaction from "./useUpdateTransaction";
 
-function Buy({ cur, latestCur, datas, isOwn }) {
+function Buy({ cur, latestCur, datas, isOwn, onCloseModal }) {
   const transaction = isOwn
-    ? datas.transactions.find((t) => t.asset === cur)
+    ? datas?.transactions.find((t) => t.asset === cur)
     : { asset: cur, quantity: 0 };
+  const currentPrice = latestCur.rates[cur];
   const [buyQuantity, setBuyQuantity] = useState(0);
-  const totalPrice = buyQuantity / latestCur.rates[cur];
-  const balance = datas.balance;
+  const totalPrice = buyQuantity / currentPrice;
+  const balance = datas?.balance;
+
+  const { isCreating, create } = useCreateTransaction(onCloseModal);
+  const { isUpdating, update } = useUpdateTransaction(onCloseModal);
+
+  function handleBuy() {
+    if (buyQuantity === 0) return;
+    const newBalance = balance - totalPrice;
+    if (isOwn) {
+      update({
+        asset: cur,
+        avgBuyPrice:
+          (Number(transaction.avgBuyPrice) * Number(transaction.quantity) +
+            Number(currentPrice) * Number(buyQuantity)) /
+          (Number(transaction.quantity) + Number(buyQuantity)),
+        quantity: Number(transaction.quantity) + Number(buyQuantity),
+        balance: Number(newBalance),
+      });
+    } else {
+      create({
+        asset: cur,
+        avgBuyPrice: currentPrice,
+        quantity: buyQuantity,
+        balance: newBalance,
+      });
+    }
+  }
 
   return (
     <div className="flex w-[22rem] flex-col divide-y-2 divide-emerald-700 px-3 py-2 text-center">
@@ -16,19 +45,20 @@ function Buy({ cur, latestCur, datas, isOwn }) {
         <p>Current Quantity:</p>
         <p>{formatNumber(transaction.quantity)}</p>
         <p>Current Price: </p>
-        <p>{formatNumber(latestCur.rates[cur])}</p>
-        <p>Balance:</p>
+        <p>{formatNumber(currentPrice)}</p>
+        <p>Current Balance:</p>
         <p>{formatCurrency(balance, "CNY")}</p>
         <p>Buy Quantity:</p>
         <div className="flex">
           <input
+            disabled={isCreating || isUpdating}
             value={buyQuantity}
             onChange={(e) => {
               const value = e.target.value;
-              const price = value / latestCur.rates[cur];
+              const price = value / currentPrice;
               if (value < 0) setBuyQuantity(0);
               else if (price > balance)
-                setBuyQuantity(Math.trunc(balance * latestCur.rates[cur]));
+                setBuyQuantity(Math.trunc(balance * currentPrice));
               else setBuyQuantity(value);
             }}
             className="w-32 rounded-md border border-zinc-300 pl-3"
@@ -40,7 +70,11 @@ function Buy({ cur, latestCur, datas, isOwn }) {
       <div className="grid grid-cols-2 px-2 text-start text-lg">
         <p>Total Price:</p>
         <p>{formatCurrency(totalPrice, "CNY")}</p>
-        <button className="col-span-2 mt-6 cursor-pointer rounded-lg bg-emerald-700 px-6 py-1 font-semibold text-white">
+        <button
+          disabled={isCreating || isUpdating}
+          onClick={handleBuy}
+          className={`${isCreating || isUpdating ? "cursor-not-allowed bg-zinc-300" : "cursor-pointer bg-emerald-700"} col-span-2 mt-6 rounded-lg px-6 py-1 font-semibold text-white`}
+        >
           BUY
         </button>
       </div>

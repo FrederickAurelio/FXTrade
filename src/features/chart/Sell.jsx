@@ -2,7 +2,7 @@ import { useState } from "react";
 import { formatCurrency, formatNumber } from "../../utils/helpers";
 
 function Sell({ cur, latestCur, datas }) {
-  const transaction = datas.transactions.find((t) => t.asset === cur);
+  const transaction = datas?.transactions.find((t) => t.asset === cur);
   const [sellQuantity, setSellQuantity] = useState(0);
   const sellPrice = sellQuantity / latestCur.rates[cur];
 

@@ -17,11 +17,14 @@ function Chart() {
   const { screenSize } = useScreenSize();
   const [searchParam, setSearchParam] = useSearchParams();
   const cur = searchParam.get("cur");
+
   const { currency, isPending } = useCurrency();
   const { isPending: isPending2, data: transactionData } = useData(user.id);
+  
+  //later
   const latestCur = fakeLatestCur;
 
-  const isOwn = transactionData.transactions.map((t) => t.asset).includes(cur);
+  const isOwn = transactionData?.transactions.map((t) => t.asset).includes(cur);
 
   if (!cur)
     return (
@@ -31,6 +34,9 @@ function Chart() {
     );
 
   if (isPending || isPending2) return <Spinner />;
+  if (currency === undefined)
+    return <p className="p-2 text-lg font-semibold">Offline..</p>;
+
   const dates = Object.entries(currency?.rates).map((a) => new Date(a[0]));
   const rates = Object.entries(currency?.rates).flatMap((a) =>
     Object.values(a[1]),
@@ -69,8 +75,8 @@ function Chart() {
         <Modal>
           <Modal.Open id="sell">
             <button
-              disabled={!isOwn}
-              className={`${!isOwn ? "cursor-not-allowed bg-zinc-300" : "cursor-pointer bg-rose-700 hover:scale-110"} rounded-lg px-8 py-2 font-semibold text-white duration-200`}
+              disabled={!isOwn || transactionData === undefined}
+              className={`${!isOwn || transactionData === undefined ? "cursor-not-allowed bg-zinc-300" : "cursor-pointer bg-rose-700 hover:scale-110"} rounded-lg px-8 py-2 font-semibold text-white duration-200`}
             >
               SELL
             </button>
@@ -80,12 +86,20 @@ function Chart() {
           </Modal.Window>
 
           <Modal.Open id="buy">
-            <button className="cursor-pointer rounded-lg bg-emerald-700 px-8 py-2 font-semibold text-white duration-200 hover:scale-110">
+            <button
+              disabled={transactionData === undefined}
+              className={`${transactionData === undefined ? "cursor-not-allowed bg-zinc-300" : "cursor-pointer bg-emerald-700 hover:scale-110"} rounded-lg px-8 py-2 font-semibold text-white duration-200`}
+            >
               BUY
             </button>
           </Modal.Open>
           <Modal.Window id="buy">
-            <Buy isOwn={isOwn} datas={transactionData} latestCur={latestCur} cur={cur} />
+            <Buy
+              isOwn={isOwn}
+              datas={transactionData}
+              latestCur={latestCur}
+              cur={cur}
+            />
           </Modal.Window>
         </Modal>
       </div>

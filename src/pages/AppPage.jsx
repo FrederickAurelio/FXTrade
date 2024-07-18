@@ -17,19 +17,20 @@ function AppPage() {
     if (!user) navigate("/forex/login/");
   }, [navigate, user]);
 
+  if (!user) return null;
 
   return (
     <>
       <main className="grid h-[93dvh] w-full bg-zinc-100 lg:h-dvh lg:grid-cols-2 lg:divide-x-2 lg:divide-zinc-200">
         {screenSize > 1020 && (
           <>
-            <ChartPage/>
+            <ChartPage />
             <TablePage setActiveTab={setActiveTab} />
           </>
         )}
         {screenSize <= 1020 ? (
           activeTab === "chart" ? (
-            <ChartPage/>
+            <ChartPage />
           ) : (
             <TablePage setActiveTab={setActiveTab} />
           )

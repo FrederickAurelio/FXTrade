@@ -4,7 +4,6 @@ export const currencyList = {
   "BRL": "Brazilian Real",
   "CAD": "Canadian Dollar",
   "CHF": "Swiss Franc",
-  "CNY": "Chinese Renminbi Yuan",
   "CZK": "Czech Koruna",
   "DKK": "Danish Krone",
   "EUR": "Euro",
