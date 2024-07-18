@@ -1,5 +1,6 @@
 import Spinner from "../components/Spinner";
 import LogoutButton from "../features/auth/LogoutButton";
+import useLatestCurrency from "../features/chart/useLatestCurrency";
 import Table from "../features/table/Table";
 import useData from "../features/table/useData";
 import { formatCurrency } from "../utils/helpers";
@@ -8,8 +9,9 @@ import AV from "leancloud-storage/";
 function TablePage({ setActiveTab }) {
   const user = AV.User.current();
   const { isPending, data } = useData(user.id);
+  const {isPending:isPending2, latestCur} = useLatestCurrency();
 
-  if (isPending) return <Spinner />;
+  if (isPending || isPending2) return <Spinner />;
   if (data?.balance === undefined)
     return <p className="p-2 text-lg font-semibold">Offline..</p>;
   
@@ -21,7 +23,7 @@ function TablePage({ setActiveTab }) {
         </h1>
         <LogoutButton username={user.attributes.username} />
       </div>
-      <Table transactions={data?.transactions} setActiveTab={setActiveTab} />
+      <Table latestCur={latestCur} transactions={data?.transactions} setActiveTab={setActiveTab} />
     </div>
   );
 }

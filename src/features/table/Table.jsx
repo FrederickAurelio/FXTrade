@@ -1,12 +1,9 @@
 import { useSearchParams } from "react-router-dom";
-import { fakeLatestCur } from "../../utils/data";
 import { formatCurrency, formatNumber } from "../../utils/helpers";
 import TotalAsset from "./TotalAsset";
 
-function Table({ setActiveTab, transactions = [] }) {
+function Table({ setActiveTab, transactions = [], latestCur }) {
   const [searchParam, setSearchParam] = useSearchParams();
-  // later
-  const latestCur = fakeLatestCur;
 
   return (
     <div className="flex w-full flex-col divide-y divide-zinc-200 overflow-x-auto xl:items-center xl:overflow-x-hidden">

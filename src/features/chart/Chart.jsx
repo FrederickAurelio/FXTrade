@@ -2,7 +2,6 @@ import { LineChart } from "@mui/x-charts/LineChart";
 import { format } from "date-fns";
 import { useScreenSize } from "../../context/ScreenContext";
 import { useSearchParams } from "react-router-dom";
-import { fakeLatestCur } from "../../utils/data";
 import TimeSeries from "./TimeSeries";
 import Modal from "../../components/Modal";
 import Sell from "./Sell";
@@ -11,6 +10,7 @@ import useCurrency from "./useCurrency";
 import Spinner from "../../components/Spinner";
 import AV from "leancloud-storage/";
 import useData from "../table/useData";
+import useLatestCurrency from "./useLatestCurrency";
 
 function Chart() {
   const user = AV.User.current();
@@ -20,9 +20,7 @@ function Chart() {
 
   const { currency, isPending } = useCurrency();
   const { isPending: isPending2, data: transactionData } = useData(user.id);
-
-  //later
-  const latestCur = fakeLatestCur;
+  const { isPending: isPending3, latestCur } = useLatestCurrency();
 
   const isOwn = transactionData?.transactions.map((t) => t.asset).includes(cur);
 
@@ -33,7 +31,7 @@ function Chart() {
       </p>
     );
 
-  if (isPending || isPending2) return <Spinner />;
+  if (isPending || isPending2 || isPending3) return <Spinner />;
   if (currency === undefined)
     return <p className="p-2 text-lg font-semibold">Offline..</p>;
 

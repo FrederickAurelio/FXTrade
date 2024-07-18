@@ -50,6 +50,17 @@ export async function getCurrency(cur, time) {
   }
 }
 
+export async function getLatestCurrency() {
+  try {
+    const apikey = import.meta.env.VITE_REACT_APP_CUR_KEY;
+    const res = await fetch(`https://api.currencybeacon.com/v1/latest?api_key=${apikey}&base=CNY`);
+    const data = res.json();
+    return data;
+  } catch (err) {
+    toast.error("Failed to fetch chart data");
+  }
+}
+
 async function findObjectId(tablename, userId, asset) {
   const query = new AV.Query(tablename);
   query.equalTo("user", {
@@ -124,3 +135,6 @@ export async function deleteTransaction({ balance, asset }) {
     throw new Error(error.message)
   }
 }
+
+
+
